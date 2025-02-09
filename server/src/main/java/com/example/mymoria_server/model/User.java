@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class User implements UserDetails {
     private Set<Role>   authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return authorities != null ? authorities : Collections.emptyList();
     }
     public void setAuthorities(Set<Role> authorities){
         this.authorities = authorities;
@@ -73,5 +74,25 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Modify this based on your application's requirements
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Modify this based on your application's requirements
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Modify this based on your application's requirements
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // Modify this based on your application's requirements
     }
 }

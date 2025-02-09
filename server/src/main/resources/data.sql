@@ -6,7 +6,7 @@
 
 
 --USER INSERT--
-insert into users (username,first_name,last_name,password) values ('uFirst', 'Ffirst', 'Lfirst','123');
+insert into users (username,first_name,last_name,password) values ('uFirst', 'Ffirst', 'Lfirst','$2a$12$kCZzotlwmzpeMuzp/T5InuLskCpjvS6FSY4W21z0B/h4tCz/6VzL6');
 insert into users (username,first_name,last_name,password) values ('uSecond', 'FSecond', 'LSecond','123');
 insert into users (username,first_name,last_name,password) values ('uThird', 'FThird', 'LThird','123');
 

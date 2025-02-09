@@ -5,8 +5,10 @@ import com.example.mymoria_server.model.PostAdd;
 import com.example.mymoria_server.model.User;
 import com.example.mymoria_server.repo.PostRepo;
 import com.example.mymoria_server.repo.UserRepo;
+import com.example.mymoria_server.service.AuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,16 +20,21 @@ import java.util.concurrent.atomic.AtomicLong;
 public class PostController {
 
     private final PostRepo postRepo;
-    private final UserRepo userRepo;
-    public PostController(PostRepo postRepo, UserRepo userRepo
-                          ){
+    //private final UserRepo userRepo;
+    private final AuthenticationService authenticationService;
+    public PostController(PostRepo postRepo,
+                          AuthenticationService authenticationService
+    ){
         this.postRepo=postRepo;
-        this.userRepo = userRepo;
+        this.authenticationService = authenticationService;
     }
 
     //View All Post
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> post() {
+        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        //String hashedPassword = encoder.encode("123");
+        //System.out.println("______###############################---------------------> "+hashedPassword);
         try{
             //Todo: Implements DTO
             List<Post> posts = new ArrayList<Post>(postRepo.findAll());
@@ -40,16 +47,6 @@ public class PostController {
         }
     }
 
-    @GetMapping("/users/{username}")
-    public ResponseEntity<User> user(@PathVariable String username){
-        try{
-            //Todo: Implements DTO
-            User user = userRepo.findByUsername(username);
-            return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @PostMapping("/addPost")
     public ResponseEntity<Post> addPost(@RequestBody Post myPost){

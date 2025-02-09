@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -17,15 +18,17 @@ public class UserRepo {
         this.userRowMapper = userRowMapper;
     }
 
-    public User findByUsername(String username){
+    //Find user
+    public List<User> findByUsername(String username){
         //SQL queries template
         String sql = "SELECT * from users where username = ?";
         try {
             List<User> users = template.query(sql, userRowMapper, username);
-            return users.get(0);
+            return users;
         } catch (Exception e) {
-            System.out.println(e);
-            return null;// Handle the case when no user is found
+            // System.out.println(e);
+            // Handle the case when no user is found
+            return new ArrayList<>();
         }
     }
 

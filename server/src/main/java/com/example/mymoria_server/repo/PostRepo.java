@@ -34,18 +34,18 @@ public class PostRepo {
         try {
             template.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setLong(1, post.getUser().getUserID()); // Set user_id
-                ps.setString(2, post.getContent()); // Set content
-                ps.setString(3, post.getTags()); // Set tags
+                ps.setLong(1, post.getUser().getUserID());  // Set user_id
+                ps.setString(2, post.getContent());         // Set content
+                ps.setString(3, post.getTags());            // Set tags
                 return ps;
-            }, keyHolder);
+            },keyHolder);
 
 
         } catch (Exception e){
             System.out.println("Error!!!!");
             System.out.println(e);
         }
-        // Retrieve the auto-generated post_id and set it in the Post object
+        //Retrieve the auto-generated post_id and set it in the Post object
         Map<String, Object> keyMap = keyHolder.getKeys();
         if (keyMap != null && keyMap.containsKey("id")) {
             post.setId(((Number) keyMap.get("id")).longValue()); // Get only the 'id' key
@@ -86,5 +86,6 @@ public class PostRepo {
         template.execute("DROP TABLE IF EXISTS post");
         template.execute("DROP TABLE IF EXISTS user_role");
         template.execute("DROP TABLE IF EXISTS users");
+        template.execute("DROP TABLE IF EXISTS role");
     }
 }
