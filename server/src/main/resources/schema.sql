@@ -1,14 +1,19 @@
 
+DROP TABLE IF EXISTS post cascade;
+DROP TABLE IF EXISTS user_role cascade;
+DROP TABLE IF EXISTS users cascade;
+DROP TABLE IF EXISTS role cascade;
+
 
 
 create table if not exists role (
     id        INT PRIMARY KEY,
-    authority VARCHAR(25)
+    authority VARCHAR(25) unique
 );
 
 create table if not exists users (
     id          SERIAL PRIMARY KEY,
-    username    VARCHAR(25),
+    username    VARCHAR(25) unique,
     first_name  VARCHAR(25),
     last_name   VARCHAR(25),
     password    VARCHAR(250) NOT NULL
@@ -22,9 +27,9 @@ create table if not exists post (
 );
 
 create table if not exists user_role (
-    user_id INT,
-    role_id INT,
-    PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) on delete cascade,
-    FOREIGN KEY (role_id) REFERENCES role(id) on delete cascade
+    username VARCHAR(25),
+    role VARCHAR(25),
+    PRIMARY KEY (username, role),
+    FOREIGN KEY (username) REFERENCES users(username) on delete cascade,
+    FOREIGN KEY (role) REFERENCES role(authority) on delete cascade
 );

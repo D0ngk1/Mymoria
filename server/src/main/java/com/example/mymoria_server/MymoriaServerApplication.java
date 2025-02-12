@@ -43,11 +43,5 @@ public class MymoriaServerApplication {
 			}
 		};
 	}*/
-	@EventListener(ContextClosedEvent.class)
-	public void onShutdown(ContextClosedEvent event) {
-		PostRepo postRepo = event.getApplicationContext().getBean(PostRepo.class);
-		postRepo.dropTable();
-		System.out.println("Dropped 'post' table on shutdown");
-	}
 
 }

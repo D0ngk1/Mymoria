@@ -6,17 +6,17 @@ public class Role implements GrantedAuthority {
 
     private Integer roleID;
     private String authority;
-    private User user;
+    //private User user;
 
-    Role (Integer roleID,String authority){
+    public Role (Integer roleID,String authority){
         this.roleID = roleID;
         this.authority = authority;
     }
-    Role (User user,Integer roleID,String authority){
+    /*Role (User user,Integer roleID,String authority){
         this.roleID = roleID;
         this.authority = authority;
         this.user = user;
-    }
+    }*/
 
     Role(String authority) {
         this.authority = authority;
@@ -37,12 +37,12 @@ public class Role implements GrantedAuthority {
     public void setRoleID(Integer roleID) {
         this.roleID = roleID;
     }
-
+/*
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 }

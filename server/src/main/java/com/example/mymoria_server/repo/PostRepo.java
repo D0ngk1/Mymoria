@@ -82,10 +82,5 @@ public class PostRepo {
             return post;
         });
     }
-    public void dropTable() {
-        template.execute("DROP TABLE IF EXISTS post");
-        template.execute("DROP TABLE IF EXISTS user_role");
-        template.execute("DROP TABLE IF EXISTS users");
-        template.execute("DROP TABLE IF EXISTS role");
-    }
+
 }
