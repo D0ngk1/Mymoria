@@ -1,6 +1,7 @@
 package com.example.mymoria_server.controller;
 
-import com.example.mymoria_server.model.User;
+import com.example.mymoria_server.DTO.LoginRequestDTO;
+import com.example.mymoria_server.DTO.LoginResponseDTO;
 import com.example.mymoria_server.service.AuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,10 @@ public class AuthController {
         this.authenticationService = authenticationService;
     }
 
-    @GetMapping("/users/{username}/{password}")
-    public ResponseEntity<User> user(@PathVariable String username, @PathVariable String password){
-        //System.out.println("++++++++++++++++>>>>>>>>>>>>>>>>>>>>>>>   " + password);
+    @PostMapping ("/login")
+    public ResponseEntity<LoginResponseDTO> user(@RequestBody LoginRequestDTO loginRequest){
         try{
-
-            //Todo: Implements DTO
-            User user = authenticationService.loginUser(username,password);
+            LoginResponseDTO user = authenticationService.loginUser(loginRequest.username(),loginRequest.password());
             return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);

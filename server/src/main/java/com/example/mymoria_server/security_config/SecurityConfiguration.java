@@ -57,7 +57,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
-                .csrf((csrf) -> csrf.ignoringRequestMatchers("/mymoria/*"))
+                .csrf((csrf) -> csrf.ignoringRequestMatchers("/mymoria/**"))
                 //.httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/mymoria/auth/**").permitAll()

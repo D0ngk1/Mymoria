@@ -27,4 +27,12 @@ public class UserService implements UserDetailsService {
         Optional<User> checkUser = userRepo.findByUsername(username).stream().findFirst();
         return checkUser.orElseThrow(()->new UsernameNotFoundException("User is not valid"));
     }
+    //Load user Without DTO
+    /*
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //Load user from database
+        Optional<User> checkUser = userRepo.findByUsername(username).stream().findFirst();
+        return checkUser.orElseThrow(()->new UsernameNotFoundException("User is not valid"));
+    }*/
 }

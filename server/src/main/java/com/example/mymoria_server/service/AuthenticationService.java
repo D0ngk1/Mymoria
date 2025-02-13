@@ -1,5 +1,8 @@
 package com.example.mymoria_server.service;
 
+import com.example.mymoria_server.DTO.LoginResponseDTO;
+import com.example.mymoria_server.DTO.UserDTO;
+import com.example.mymoria_server.mapper.UserDTOMapper;
 import com.example.mymoria_server.model.User;
 import com.example.mymoria_server.repo.UserRepo;
 import com.example.mymoria_server.security_config.JwtService;
@@ -16,22 +19,27 @@ public class AuthenticationService {
     public final AuthenticationManager authenticationManager;
     public final UserRepo userRepo;
     public final JwtService jwtService;
-    public AuthenticationService(AuthenticationManager authenticationManager, UserRepo userRepo, JwtService jwtService) {
+    private final UserDTOMapper userDTOMapper;
+    public AuthenticationService(AuthenticationManager authenticationManager, UserRepo userRepo, JwtService jwtService, UserDTOMapper userDTOMapper) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
         this.jwtService = jwtService;
+        this.userDTOMapper = userDTOMapper;
     }
 
-    public User loginUser(String username,String password){
-
+    public LoginResponseDTO loginUser(String username, String password){
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username,password));
 
+            //Generate JWT Token
             SecurityContextHolder.getContext().setAuthentication(auth);
             String token = jwtService.generateJwt(auth);
-            System.out.println(token);
-            return userRepo.findByUsername(username).get(0);
+
+            //System.out.println(token);
+            UserDTO userDTO = userDTOMapper.apply(userRepo.findByUsername(username).get(0));
+            return new LoginResponseDTO(token,userDTO);
+
         } catch (AuthenticationException e){
             return null;
         }
