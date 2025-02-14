@@ -4,15 +4,14 @@ import com.example.mymoria_server.model.Role;
 
 import java.util.Set;
 
-public record UserDTO(
-        Long userID,
+public record RegistrationDTO(
         String username,
         String firstName,
         String lastName,
-        Set<Role> role,
-        boolean isEnabled,
+        String password
+        //To add in the future
+        /*boolean isEnabled,
         boolean isAccountNotLocked,
-        boolean isAccountNotExpired
+        boolean isAccountNotExpired*/
 ) {
-
 }
