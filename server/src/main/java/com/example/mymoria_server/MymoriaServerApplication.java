@@ -1,7 +1,10 @@
 package com.example.mymoria_server;
 
+import com.example.mymoria_server.controller.AuthController;
 import com.example.mymoria_server.model.Post;
 import com.example.mymoria_server.repo.PostRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +17,6 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class MymoriaServerApplication {
-
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(MymoriaServerApplication.class, args);
 

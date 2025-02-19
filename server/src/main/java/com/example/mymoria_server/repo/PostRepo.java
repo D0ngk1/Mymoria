@@ -50,8 +50,6 @@ public class PostRepo {
         if (keyMap != null && keyMap.containsKey("id")) {
             post.setId(((Number) keyMap.get("id")).longValue()); // Get only the 'id' key
             //System.out.println("Generated Post ID: " + post.getId());
-        } else {
-            //System.out.println("No key was generated.");
         }
 
         //template.update(sql, post.getUserID(),post.getContent(),post.getTags());

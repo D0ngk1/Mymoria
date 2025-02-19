@@ -32,7 +32,7 @@ public class AuthenticationService {
     public LoginResponseDTO loginUser(String username, String password){
         try {
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username,password));
+                    new UsernamePasswordAuthenticationToken(username,password)  );
 
             //Generate JWT Token
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -46,16 +46,12 @@ public class AuthenticationService {
             return null;
         }
     }
+    public boolean isUserExist(String username){
+        return !userRepo.findByUsername(username).isEmpty();
+    }
+
     public UserDTO registerUser(RegistrationDTO registrationDTO){
         try {
-            /*Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username,password));*/
-
-            //Generate JWT Token
-            //SecurityContextHolder.getContext().setAuthentication(auth);
-            //String token = jwtService.generateJwt(auth);
-
-            //System.out.println(token);
 
             return userRepo.registerUser(registrationDTO);
 

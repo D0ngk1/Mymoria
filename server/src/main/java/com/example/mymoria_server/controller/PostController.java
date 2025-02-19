@@ -21,20 +21,15 @@ public class PostController {
 
     private final PostRepo postRepo;
     //private final UserRepo userRepo;
-    private final AuthenticationService authenticationService;
     public PostController(PostRepo postRepo,
                           AuthenticationService authenticationService
     ){
         this.postRepo=postRepo;
-        this.authenticationService = authenticationService;
     }
 
     //View All Post
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> post() {
-        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //String hashedPassword = encoder.encode("123");
-        //System.out.println("______###############################---------------------> "+hashedPassword);
         try{
             //Todo: Implements DTO
             List<Post> posts = new ArrayList<Post>(postRepo.findAll());

@@ -4,6 +4,7 @@ import com.example.mymoria_server.DTO.LoginRequestDTO;
 import com.example.mymoria_server.DTO.LoginResponseDTO;
 import com.example.mymoria_server.DTO.RegistrationDTO;
 import com.example.mymoria_server.DTO.UserDTO;
+import com.example.mymoria_server.exception.UserAlreadyExistsException;
 import com.example.mymoria_server.mapper.UserDTOMapper;
 import com.example.mymoria_server.model.Role;
 import com.example.mymoria_server.model.User;
@@ -26,15 +27,10 @@ public class UserRepo {
         this.userRowMapper = userRowMapper;
         this.userDTOMapper = userDTOMapper;
     }
+
     //User registration, save the user in the database
-    //Using LoginRequestDTO for now, will change in the future
     public UserDTO registerUser (RegistrationDTO registrationDTO){
-        //Check if user is already exist
-        List<User> users =  findByUsername(registrationDTO.username());
-        //Throw exception if user is not empty
-        if (!users.isEmpty()){
-            throw new RuntimeException("Username already exists");
-        }
+
 
         //To be deleted : System.out.println("Inserting data of user......");
         //Insert data to users database
@@ -101,7 +97,7 @@ public class UserRepo {
             users.get(0).setAuthorities(Set.copyOf(roles));
             return users;
         } catch (Exception e) {
-            // System.out.println(e);
+            System.out.println(e);
             // Handle the case when no user is found
             return new ArrayList<>();
         }
