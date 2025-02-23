@@ -5,5 +5,5 @@ export interface Feeds {
     tags: string;
     dateCreated: string;
     favorite: boolean;
-    image: string;
+    //image: string;
 }

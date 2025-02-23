@@ -42,8 +42,7 @@ public class PostRepo {
 
 
         } catch (Exception e){
-            System.out.println("Error!!!!");
-            System.out.println(e);
+            e.printStackTrace();
         }
         //Retrieve the auto-generated post_id and set it in the Post object
         Map<String, Object> keyMap = keyHolder.getKeys();
@@ -58,25 +57,33 @@ public class PostRepo {
     }
 
     public void deletePost(Integer id){
+        try {
         String sqlDeleteQuery = "delete from post where id=?";
         template.update(sqlDeleteQuery,id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     public List<Post> findAll() {
         String sql = "SELECT * FROM post";
         return template.query(sql, (rs, rowNum) -> {
+
             Post post = new Post();
-            post.setId(rs.getLong("id"));
-            post.setContent(rs.getString("content"));
-            post.setTags(rs.getString("tags"));
+            try {
+                post.setId(rs.getLong("id"));
+                post.setContent(rs.getString("content"));
+                post.setTags(rs.getString("tags"));
 
-            // Fetch the associated user (if needed)
-            Long userId = rs.getLong("userID");
-            User user = new User();
-            user.setUserID(userId);
-            post.setUser(user);
-
+                // Fetch the associated user (if needed)
+                Long userId = rs.getLong("userID");
+                User user = new User();
+                user.setUserID(userId);
+                post.setUser(user);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             return post;
         });
     }

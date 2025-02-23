@@ -10,6 +10,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Home from './tabs/Home';
 import TaskScreen from './tabs/Task';
 import AddPost from './screens/AddPost';
+import Login from './tabs/Auth/Login'
 // import NewPost from './screens/NewPost';
 import ViewTaskScreen from './screens/ViewTask';
 import { CameraScreen } from './screens/Camera';
@@ -19,6 +20,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const homeName = 'Home';
 const taskName = 'Tasks';
 const addPostName = 'AddPost';
+const loginName = 'Login';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -105,18 +107,27 @@ const PrimaryTabs: any = ()=> {
 }
 
 export default function MainContainer() {
+  const login = false;
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-      initialRouteName="Tabs"
-      screenOptions={{
-        headerShown: false,
-      }}
-      > 
-        <Stack.Screen name="Tabs" component={PrimaryTabs}/>
-        <Stack.Screen name="ViewStack" component={ViewTaskScreen} options={{headerShown:true}}/>
-        <Stack.Screen name={addPostName} component={AddPost} options={{headerShown:true}}/>
-        <Stack.Screen name={'OpenCamera'} component={CameraScreen}/>
+        initialRouteName={login ? "PrimaryTabs" : loginName} // Ensure "PrimaryTabs" is registered below
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {!login ? (
+          <Stack.Screen name={loginName} component={Login} options={{ headerShown: false }} />
+        ) : (
+          <>
+            {/* Register PrimaryTabs as a screen */}
+            <Stack.Screen name="PrimaryTabs" component={PrimaryTabs} options={{ headerShown: false }} />
+            <Stack.Screen name="ViewTask" component={ViewTaskScreen} options={{ headerShown: true }} />
+            <Stack.Screen name={addPostName} component={AddPost} options={{ headerShown: true }} />
+            <Stack.Screen name="OpenCamera" component={CameraScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

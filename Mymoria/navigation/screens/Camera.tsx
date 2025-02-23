@@ -1,7 +1,7 @@
 import { CameraType, CameraView  } from "expo-camera";
 import { useCameraPermissions, } from "expo-image-picker";
-import { useRef, useState } from "react"
-import { View,Text,Button, TouchableOpacity,StyleSheet, Alert } from "react-native"
+import { useEffect, useRef, useState } from "react"
+import { View,Text,Button, TouchableOpacity,StyleSheet } from "react-native"
 import { Image, type ImageSource } from "expo-image";
 import * as MediaLibrary from 'expo-media-library';
 import React from "react";
@@ -17,8 +17,8 @@ export const CameraScreen =() =>{
     const navigation = useNavigation();
     //const popToAction = StackActions.popTo('Profile', { user: 'jane' });
     const [facing,setFacing] = useState<CameraType>('back');
-    const [permission,requestPermissionCamera] = useCameraPermissions();
-    const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+    const [cameraPermission,requestPermissionCamera] = useCameraPermissions();
+    const [mediaPermission, requestPermissionMedia] = MediaLibrary.usePermissions();
     const [image,setImage] = useState<any>();
     const [cameraProps, setCameraProps] = useState({
         zoom:0,
@@ -26,11 +26,14 @@ export const CameraScreen =() =>{
         animateShutter:false,
         facing:'front',
     })
+
+    // Request permissions on mount
+ 
     const cameraRef = useRef<CameraView|null>(null);
-    if(!permission){
+    if(!cameraPermission){
         return <View/>;
     }
-    if(!permission.granted){
+    if(!cameraPermission.granted){
         return (
             <View style={styles.container}>
                 <Text style={styles.message}> We need your permission to use the camera</Text>
@@ -38,11 +41,11 @@ export const CameraScreen =() =>{
             </View>
         );
     }
-    if(!permissionResponse?.granted){
+    if(!mediaPermission || mediaPermission.status !== "granted") {
         return (
             <View style={styles.container}>
                 <Text style={styles.message}> We need your permission to use the gallery</Text>
-                <Button onPress={requestPermission} title="grant gallery"/>
+                <Button onPress={requestPermissionMedia} title="grant gallery"/>
             </View>
         );
     }
@@ -52,7 +55,6 @@ export const CameraScreen =() =>{
             try {
             const asset = await MediaLibrary.createAssetAsync(image);
             const assetInfo = await MediaLibrary.getAssetInfoAsync(asset.id);
-            //Alert.alert('Photo saved!' + asset.uri);
             if (assetInfo) {
                 const popToAction = StackActions.popTo('AddPost', { uri:asset.uri });
                 navigation.dispatch(popToAction);

@@ -26,7 +26,6 @@ const myFeed : Feeds ={
   tags:     "MyPost",
   dateCreated: "now",
   favorite: false,
-  image:'',
 };
 
 export default function AddPost() {
@@ -42,7 +41,6 @@ export default function AddPost() {
   const feedServices = FeedsService();
   const handlePost = () =>{
     myFeed.content = content;
-    myFeed.image   = selectedImage;
     feedServices.addFeed(myFeed);
     console.log(myFeed);
     navigation.navigate('Tabs');

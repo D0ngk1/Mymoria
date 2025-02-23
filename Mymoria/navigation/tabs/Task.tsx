@@ -6,7 +6,7 @@ type RootStackParamList = {
   Home: undefined;
   Tasks: undefined;
   AddPost: undefined;
-  'ViewStack' : {data:string};
+  'ViewTask' : {data:string};
 };
 
 export default function TaskScreen() {
@@ -16,7 +16,7 @@ export default function TaskScreen() {
       <Text style={styles.text}>Task screen</Text>
        <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ViewStack',{data:"1231asdfasdfasd23"}); // Now this is type-safe
+          navigation.navigate('ViewTask',{data:"1231asdfasdfasd23"}); // Now this is type-safe
         }}
         ><Ionicons name={'add-circle'} size={50} /></TouchableOpacity>
     </View>
